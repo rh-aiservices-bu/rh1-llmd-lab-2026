@@ -1,0 +1,7 @@
+apiVersion: v2
+name: image-puller
+description: >
+  A helm chart to deploy a DaemonSet that pre-pulls images we need to all nodes
+type: application
+version: 0.1.0
+appVersion: 0.1.0
