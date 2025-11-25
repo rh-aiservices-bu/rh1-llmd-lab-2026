@@ -4,6 +4,8 @@ metadata:
   name: default-dsc
   labels:
     app.kubernetes.io/name: datasciencecluster
+  annotations:
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
 spec:
   components:
     {{- toYaml .Values.components | nindent 4 }}
