@@ -55,8 +55,7 @@ spec:
             - '--openshift-ca=/etc/proxy/certs/ca-bundle.crt'
             - '--skip-auth-regex=^/metrics'
             - '--skip-auth-regex=^/api/health'
-            - '--skip-provider-button=true'
-            - '--openshift-sar={"namespace": "grafana", "resource": "services", "verb": "get"}'
+            - '--openshift-sar={"namespace": "{{ .Release.Namespace }}", "resource": "services", "verb": "get"}'
             image: 'image-registry.openshift-image-registry.svc:5000/openshift/oauth-proxy:v4.4'
             name: oauth-proxy
             ports:
@@ -105,7 +104,4 @@ spec:
       annotations:
         argocd.argoproj.io/compare-options: IgnoreExtraneous
         serviceaccounts.openshift.io/oauth-redirectreference.primary: >-
-          {"kind": "OAuthRedirectReference",
-           "apiVersion": "v1",
-           "reference": {"kind": "Route",
-                         "name": "grafana-route"}}
+          {"kind": "OAuthRedirectReference", "apiVersion": "v1", "reference": {"kind": "Route", "name": "grafana-route"}}
