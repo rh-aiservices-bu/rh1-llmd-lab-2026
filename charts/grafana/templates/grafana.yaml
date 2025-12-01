@@ -48,7 +48,7 @@ spec:
             - '--upstream=http://localhost:3000'
             - '--tls-cert=/etc/tls/private/tls.crt'
             - '--tls-key=/etc/tls/private/tls.key'
-            - '--openshift-service-account=grafana-serviceaccount'
+            - '--openshift-service-account=grafana-sa'
             - '--cookie-secret-file=/etc/proxy/secrets/session_secret'
             - '--openshift-ca=/etc/pki/tls/cert.pem'
             - '--openshift-ca=/var/run/secrets/kubernetes.io/serviceaccount/ca.crt'
