@@ -26,7 +26,7 @@ roleRef:
   name: grafana-proxy
 subjects:
 - kind: ServiceAccount
-  name: grafana-serviceaccount
+  name: grafana-sa
   namespace: {{ .Release.Namespace }}
 ---
 apiVersion: rbac.authorization.k8s.io/v1
@@ -39,5 +39,5 @@ roleRef:
   name: cluster-monitoring-view
 subjects:
 - kind: ServiceAccount
-  name: grafana-serviceaccount
+  name: grafana-sa
   namespace: {{ .Release.Namespace }}
