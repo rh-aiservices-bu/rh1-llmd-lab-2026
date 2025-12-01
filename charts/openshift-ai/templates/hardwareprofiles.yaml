@@ -1,0 +1,65 @@
+apiVersion: infrastructure.opendatahub.io/v1
+kind: HardwareProfile
+metadata:
+  annotations:
+    opendatahub.io/dashboard-feature-visibility: '[]'
+    opendatahub.io/description: Provides a baseline hardware profile with 2 CPUs and
+      4Gi memory by default, adjustable up to 32 CPUs and 128Gi memory.
+    opendatahub.io/disabled: "false"
+    opendatahub.io/display-name: Default Profile (CPU only)
+    opendatahub.io/managed: "false"
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+  labels:
+    app.kubernetes.io/part-of: hardwareprofile
+    app.opendatahub.io/hardwareprofile: "true"
+  name: default-profile
+  namespace: redhat-ods-applications
+spec:
+  identifiers:
+  - defaultCount: 2
+    displayName: CPU
+    identifier: cpu
+    maxCount: 32
+    minCount: 1
+    resourceType: CPU
+  - defaultCount: 4Gi
+    displayName: Memory
+    identifier: memory
+    maxCount: 128Gi
+    minCount: 2Gi
+    resourceType: Memory
+---
+apiVersion: infrastructure.opendatahub.io/v1
+kind: HardwareProfile
+metadata:
+  annotations:
+    opendatahub.io/description: Provides an accelerated hardware profile with 8 CPUs,
+      16Gi memory, and one GPU by default, adjustable up to 32 CPUs, 128Gi memory, and
+      4 GPUs.
+    opendatahub.io/disabled: "false"
+    opendatahub.io/display-name: NVIDIA L4
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+  labels:
+    app.opendatahub.io/hardwareprofile: "true"
+  name: accelerated-profile
+  namespace: redhat-ods-applications
+spec:
+  identifiers:
+  - defaultCount: 8
+    displayName: CPU
+    identifier: cpu
+    maxCount: 32
+    minCount: 1
+    resourceType: CPU
+  - defaultCount: 16Gi
+    displayName: Memory
+    identifier: memory
+    maxCount: 128Gi
+    minCount: 2Gi
+    resourceType: Memory
+  - defaultCount: 1
+    displayName: NVIDIA L4
+    identifier: nvidia.com/gpu
+    maxCount: 4
+    minCount: 1
+    resourceType: Accelerator
