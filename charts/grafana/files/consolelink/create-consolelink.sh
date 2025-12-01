@@ -7,4 +7,5 @@ export ROUTE
 
 cat << EOF | oc apply -f-
 $(cat /mnt/consolelink.yaml.tpl)
+  href: https://${ROUTE}/
 EOF
