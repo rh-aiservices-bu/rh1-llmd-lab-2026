@@ -423,7 +423,7 @@ spec:
               "editorMode": "code",
               "expr": "vllm:prefix_cache_hits_total{model_name=~\"$model\", kubernetes_namespace=~\"$namespace\", instance=~\".*:8000\", job=\"vllm-pods\"} / vllm:prefix_cache_queries_total{model_name=~\"$model\", kubernetes_namespace=~\"$namespace\", instance=~\".*:8000\", job=\"vllm-pods\"} \n",
               "interval": "",
-              "legendFormat": "Pod {{pod}}",
+              "legendFormat": "Pod {{ "{{" }}pod{{ "}}" }}",
               "range": true,
               "refId": "A"
             }
@@ -574,7 +574,7 @@ spec:
               "exemplar": false,
               "expr": "vllm:kv_cache_usage_perc{instance=~\".*:8000\", job=\"vllm-pods\"} * 100",
               "instant": false,
-              "legendFormat": "Pod {{pod}}",
+              "legendFormat": "Pod {{ "{{" }}pod{{ "}}" }}",
               "range": true,
               "refId": "A"
             }
@@ -1320,7 +1320,7 @@ spec:
               },
               "expr": "inference_pool_per_pod_queue_size{name=\"llm-d-gaie\"}",
               "interval": "",
-              "legendFormat": "Pod {{model_server_pod}}",
+              "legendFormat": "Pod {{ "{{" }}model_server_pod{{ "}}" }}",
               "refId": "A"
             }
           ],
