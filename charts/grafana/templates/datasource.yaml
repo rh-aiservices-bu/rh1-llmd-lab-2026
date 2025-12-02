@@ -11,10 +11,9 @@ spec:
     database: prometheus
     isDefault: true
     jsonData:
-      httpHeaderName1: 'Authorization'
+      httpHeaderName1: Authorization
       timeInterval: 5s
       tlsSkipVerify: true
-    secureJsonData:
       httpHeaderValue1: Bearer $__file{/var/run/secrets/kubernetes.io/serviceaccount/token}
     name: Prometheus
     type: prometheus
