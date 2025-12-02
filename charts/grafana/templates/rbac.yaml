@@ -41,9 +41,6 @@ subjects:
 - kind: ServiceAccount
   name: grafana-sa
   namespace: {{ .Release.Namespace }}
-- kind: ServiceAccount
-  name: grafana-operator-controller-manager
-  namespace: openshift-operators
 ---
 apiVersion: v1
 kind: ServiceAccount
