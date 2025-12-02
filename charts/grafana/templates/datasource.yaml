@@ -1,0 +1,21 @@
+apiVersion: grafana.integreatly.org/v1beta1
+kind: GrafanaDatasource
+metadata:
+  name: user-workload-monitoring
+spec:
+  instanceSelector:
+    matchLabels:
+      app.kubernetes.io/instance: grafana
+  datasource:
+    access: proxy
+    database: prometheus
+    isDefault: true
+    jsonData:
+      httpHeaderName1: 'Authorization'
+      timeInterval: 5s
+      tlsSkipVerify: true
+    secureJsonData:
+      httpHeaderValue1: Bearer $__file{/var/run/secrets/kubernetes.io/serviceaccount/token}
+    name: Prometheus
+    type: prometheus
+    url: https://thanos-querier.openshift-monitoring.svc:9091
