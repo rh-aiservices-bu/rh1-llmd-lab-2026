@@ -39,15 +39,7 @@ spec:
               name: ocp-injected-certs
             name: ocp-injected-certs
           containers:
-          - name: grafana
-            env:
-              - name: GRAFANA_TOKEN
-                valueFrom:
-                  secretKeyRef:
-                    name: grafana-auth-secret
-                    key: token
-          - name: oauth-proxy
-            args:
+          - args:
             - '--provider=openshift'
             - '--pass-basic-auth=false'
             - '--https-address=:9091'
@@ -65,6 +57,7 @@ spec:
             - '--skip-auth-regex=^/api/health'
             - '--openshift-sar={"namespace": "{{ .Release.Namespace }}", "resource": "services", "verb": "get"}'
             image: 'image-registry.openshift-image-registry.svc:5000/openshift/oauth-proxy:v4.4'
+            name: oauth-proxy
             ports:
             - containerPort: 9091
               name: oauth
