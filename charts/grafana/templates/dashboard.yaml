@@ -337,7 +337,7 @@ spec:
                 "uid": "${DS_PROMETHEUS}"
               },
               "editorMode": "code",
-              "expr": "sum(vllm:prefix_cache_hits_total{model_name=~\"$model\", kubernetes_namespace=~\"$namespace\"}) / sum(vllm:prefix_cache_queries_total{model_name=~\"$model\", kubernetes_namespace=~\"$namespace\")",
+              "expr": "sum(vllm:prefix_cache_hits_total{model_name=~\"$model\", kubernetes_namespace=~\"$namespace\"}) / sum(vllm:prefix_cache_queries_total{model_name=~\"$model\", kubernetes_namespace=~\"$namespace\"})",
               "interval": "",
               "legendFormat": "Overall Cache Hit Rate",
               "range": true,
