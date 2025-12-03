@@ -40,7 +40,7 @@ spec:
             name: ocp-injected-certs
           containers:
           - name: grafana
-            volumes:
+            volumeMounts:
             - name: grafana-data
               persistentVolumeClaim:
                 claimName: grafana-pvc
