@@ -2,6 +2,8 @@ apiVersion: grafana.integreatly.org/v1beta1
 kind: GrafanaDatasource
 metadata:
   name: user-workload-monitoring
+  annotations:
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
 spec:
   valuesFrom:
     - targetPath: secureJsonData.httpHeaderValue1
