@@ -1,0 +1,23 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: fix-gpu-operator
+spec:
+  template:
+    spec:
+      restartPolicy: Never
+      serviceAccountName: fix-gpu-operator
+      containers:
+        - name: fix-gpu-operator
+          image: 'image-registry.openshift-image-registry.svc:5000/openshift/tools:latest'
+          command: ["/bin/bash"]
+          args:
+            - /app/fix.sh
+          volumeMounts:
+            - name: fix-gpu-operator
+              mountPath: /app
+      volumes:
+        - name: fix-gpu-operator
+          configMap:
+            name: fix-gpu-operator
+            defaultMode: 493
