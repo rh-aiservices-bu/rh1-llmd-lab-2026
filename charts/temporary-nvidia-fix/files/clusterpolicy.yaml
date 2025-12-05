@@ -4,3 +4,4 @@ metadata:
   name: gpu-cluster-policy
 spec:
   {{- toYaml .Values.clusterPolicy | nindent 2 }}
+{{/* vim: set filetype=helm: */}}

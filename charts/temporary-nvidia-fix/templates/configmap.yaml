@@ -4,4 +4,9 @@ kind: ConfigMap
 metadata:
   name: fix-gpu-operator
 data:
-  {{- tpl (.Files.Glob "files/*").AsConfig $ | nindent 2 }}
+  fix.sh: |-
+    {{- tpl (.Files.Get "files/fix.sh") . | nindent 4 }}
+  subscription.yaml: |-
+    {{- tpl (.Files.Get "files/subscription.yaml") . | nindent 4 }}
+  clusterpolicy.yaml: |-
+    {{- tpl (.Files.Get "files/clusterpolicy.yaml") . | nindent 4 }}
