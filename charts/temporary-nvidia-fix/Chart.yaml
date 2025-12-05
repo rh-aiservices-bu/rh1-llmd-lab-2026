@@ -1,0 +1,7 @@
+apiVersion: v2
+name: temporary-nvidia-fix
+description: >
+  A helm chart to override the broken agnosticd ClusterPolicy
+type: application
+version: 0.1.0
+appVersion: 0.1.0

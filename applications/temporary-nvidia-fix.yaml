@@ -1,0 +1,19 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: temporary-nvidia-fix
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  destination:
+    name: in-cluster
+    namespace: nvidia-gpu-operator
+  project: default
+  source:
+    path: charts/temporary-nvidia-fix
+    repoURL: https://github.com/rh-aiservices-bu/rh1-llmd-lab-2026
+    targetRevision: HEAD
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
