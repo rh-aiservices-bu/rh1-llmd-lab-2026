@@ -7,3 +7,5 @@ images:
     image: ghcr.io/vllm-project/guidellm:v0.4.0
   - name: multiturn-benchmark
     image: quay.io/hayesphilip/multi-turn-benchmark:0.0.1
+  - name: rhaiis-llmd
+    image: registry.redhat.io/rhaiis/vllm-cuda-rhel9@sha256:ad756c01ec99a99cc7d93401c41b8d92ca96fb1ab7c5262919d818f2be4f3768
