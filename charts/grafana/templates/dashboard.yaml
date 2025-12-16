@@ -1067,7 +1067,7 @@ spec:
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "prometheus"
+            "uid": "${DS_PROMETHEUS}"
           },
           "description": "**EPP Pool Health** shows the status of the inference pool managed by the External Processing Pod (EPP). This includes the number of ready decode pods and their average queue sizes for intelligent routing decisions.\n\n• **Ready Pods**: Number of healthy decode pods available for routing\n• **Average Queue Size**: Current load across all decode pods\n\nValues help assess EPP's routing capacity and load distribution.",
           "fieldConfig": {
@@ -1170,7 +1170,7 @@ spec:
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "prometheus"
+                "uid": "${DS_PROMETHEUS}"
               },
               "expr": "inference_pool_ready_pods{name=\"llm-d-gaie\"}",
               "interval": "",
@@ -1180,7 +1180,7 @@ spec:
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "prometheus"
+                "uid": "${DS_PROMETHEUS}"
               },
               "expr": "inference_pool_average_queue_size{name=\"llm-d-gaie\"}",
               "interval": "",
@@ -1194,7 +1194,7 @@ spec:
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "prometheus"
+            "uid": "${DS_PROMETHEUS}"
           },
           "description": "**EPP KV Cache Pool Utilization** shows the cache efficiency managed by the External Processing Pod across the inference pool. This metric indicates how well the EPP is utilizing available KV cache memory for intelligent routing.\n\n• **Low (<10%)**: Underutilized cache capacity\n• **Moderate (10-60%)**: Good cache usage\n• **High (>60%)**: High cache efficiency\n\nHigher utilization typically correlates with better cache-aware routing performance.",
           "fieldConfig": {
@@ -1253,7 +1253,7 @@ spec:
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "prometheus"
+                "uid": "${DS_PROMETHEUS}"
               },
               "expr": "inference_pool_average_kv_cache_utilization{name=\"llm-d-gaie\"}",
               "interval": "",
@@ -1267,7 +1267,7 @@ spec:
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "prometheus"
+            "uid": "${DS_PROMETHEUS}"
           },
           "description": "**Per-Pod Queue Sizes (EPP View)** shows the queue depth for each individual decode pod as seen by the EPP. This provides insight into how evenly the EPP distributes load and identifies any routing imbalances.\n\n• **Even distribution**: Good EPP routing logic\n• **Uneven bars**: Potential routing optimization opportunities\n• **High values**: Pods under heavy load\n\nThe EPP uses this data for intelligent load-based routing decisions.",
           "fieldConfig": {
@@ -1319,7 +1319,7 @@ spec:
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "prometheus"
+                "uid": "${DS_PROMETHEUS}"
               },
               "expr": "inference_pool_per_pod_queue_size{name=\"llm-d-gaie\"}",
               "interval": "",
