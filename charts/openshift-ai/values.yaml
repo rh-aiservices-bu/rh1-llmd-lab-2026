@@ -1,5 +1,10 @@
 channel: fast-3.x
 
+llmD:
+  namespace:
+    create: true
+    scrape: true
+
 components:
   kserve:
     nim:
