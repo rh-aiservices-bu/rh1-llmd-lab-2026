@@ -1,7 +1,10 @@
+---
 apiVersion: batch/v1
 kind: Job
 metadata:
   name: fix-gpu-operator
+  annotations:
+    argocd.argoproj.io/sync-wave: "0"
 spec:
   template:
     spec:
