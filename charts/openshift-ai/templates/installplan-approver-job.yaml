@@ -1,0 +1,99 @@
+{{- $namespace := "redhat-ods-operator" }}
+{{- $subscriptionName := "rhods-operator" }}
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: installplan-approver
+  namespace: {{ $namespace }}
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: installplan-approver
+  namespace: {{ $namespace }}
+rules:
+  - apiGroups:
+      - operators.coreos.com
+    resources:
+      - installplans
+    verbs:
+      - get
+      - list
+      - patch
+  - apiGroups:
+      - operators.coreos.com
+    resources:
+      - subscriptions
+    verbs:
+      - get
+      - list
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: installplan-approver
+  namespace: {{ $namespace }}
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: installplan-approver
+subjects:
+  - kind: ServiceAccount
+    name: installplan-approver
+    namespace: {{ $namespace }}
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: installplan-approver
+  namespace: {{ $namespace }}
+  annotations:
+    argocd.argoproj.io/hook: Sync
+    argocd.argoproj.io/hook-delete-policy: HookSucceeded
+spec:
+  backoffLimit: 10
+  template:
+    spec:
+      serviceAccountName: installplan-approver
+      restartPolicy: OnFailure
+      containers:
+        - name: approver
+          image: registry.redhat.io/openshift4/ose-cli:latest
+          command:
+            - /bin/bash
+            - -c
+            - |
+              set -e
+              SUBSCRIPTION_NAME="{{ $subscriptionName }}"
+              NAMESPACE="{{ $namespace }}"
+              MAX_RETRIES=60
+              RETRY_INTERVAL=10
+
+              echo "Waiting for InstallPlan for subscription ${SUBSCRIPTION_NAME}..."
+
+              for i in $(seq 1 $MAX_RETRIES); do
+                INSTALL_PLAN=$(oc get subscription ${SUBSCRIPTION_NAME} -n ${NAMESPACE} -o jsonpath='{.status.installplan.name}' 2>/dev/null || true)
+
+                if [ -n "$INSTALL_PLAN" ]; then
+                  echo "Found InstallPlan: ${INSTALL_PLAN}"
+
+                  APPROVED=$(oc get installplan ${INSTALL_PLAN} -n ${NAMESPACE} -o jsonpath='{.spec.approved}')
+
+                  if [ "$APPROVED" == "true" ]; then
+                    echo "InstallPlan ${INSTALL_PLAN} is already approved."
+                    exit 0
+                  fi
+
+                  echo "Approving InstallPlan ${INSTALL_PLAN}..."
+                  oc patch installplan ${INSTALL_PLAN} -n ${NAMESPACE} --type merge --patch '{"spec":{"approved":true}}'
+                  echo "InstallPlan ${INSTALL_PLAN} approved successfully."
+                  exit 0
+                fi
+
+                echo "Attempt $i/$MAX_RETRIES: InstallPlan not found yet. Retrying in ${RETRY_INTERVAL}s..."
+                sleep $RETRY_INTERVAL
+              done
+
+              echo "ERROR: Timed out waiting for InstallPlan"
+              exit 1
