@@ -1,4 +1,5 @@
 {{- if .Values.llmD.namespace.create }}
+---
 apiVersion: v1
 kind: Namespace
 metadata:
