@@ -4,8 +4,6 @@ kind: Subscription
 metadata:
   name: grafana-operator
   namespace: openshift-operators
-  annotations:
-    argocd.argoproj.io/sync-wave: "-2"
 spec:
   channel: {{ .Values.channel }}
   installPlanApproval: Manual
