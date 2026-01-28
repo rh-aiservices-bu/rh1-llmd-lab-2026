@@ -1,5 +1,6 @@
 {{- $namespace := "redhat-ods-operator" }}
 {{- $subscriptionName := "rhods-operator" }}
+---
 apiVersion: v1
 kind: ServiceAccount
 metadata:

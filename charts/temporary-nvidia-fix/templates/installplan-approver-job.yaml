@@ -1,5 +1,6 @@
 {{- $namespace := "nvidia-gpu-operator" }}
 {{- $subscriptionName := "gpu-operator-certified" }}
+---
 apiVersion: v1
 kind: ServiceAccount
 metadata:

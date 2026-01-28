@@ -1,5 +1,6 @@
 {{- $namespace := "openshift-operators" }}
 {{- $subscriptionName := "grafana-operator" }}
+---
 apiVersion: v1
 kind: ServiceAccount
 metadata:
