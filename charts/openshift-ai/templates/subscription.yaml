@@ -5,7 +5,7 @@ metadata:
   name: rhods-operator
 spec:
   channel: {{ .Values.channel }}
-  startingCSV: rhods-operator.3.0.0
+  startingCSV: rhods-operator.3.2.0
   installPlanApproval: Manual
   name: rhods-operator
   source: redhat-operators
