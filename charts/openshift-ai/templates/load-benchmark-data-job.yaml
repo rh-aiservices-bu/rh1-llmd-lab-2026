@@ -1,0 +1,26 @@
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: load-benchmark-data
+  namespace: llm-d-project
+spec:
+  template:
+    spec:
+      containers:
+        - name: loader
+          image: registry.access.redhat.com/ubi9/ubi-minimal
+          command:
+            - /bin/sh
+            - -c
+            - |
+              curl -L -o /data/prompts.csv "https://redhat-summit-2026.s3.us-east-2.amazonaws.com/lb2861/prompts.csv"
+          volumeMounts:
+            - name: data
+              mountPath: /data
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: benchmark-data
+      restartPolicy: Never
+  backoffLimit: 3
