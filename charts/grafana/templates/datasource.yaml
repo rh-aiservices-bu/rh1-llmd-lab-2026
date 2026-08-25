@@ -20,6 +20,7 @@ spec:
     access: proxy
     database: prometheus
     isDefault: true
+    uid: llmd-prometheus
     jsonData:
       httpHeaderName1: Authorization
       timeInterval: 5s

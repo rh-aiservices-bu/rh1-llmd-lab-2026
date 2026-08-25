@@ -1347,7 +1347,7 @@ spec:
           {
             "current": {
               "text": "Prometheus",
-              "value": "c68e9e67-5f22-4e8d-9b5d-967ce150a5b1"
+              "value": "llmd-prometheus"
             },
             "label": "datasource",
             "name": "DS_PROMETHEUS",
