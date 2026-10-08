@@ -26,6 +26,9 @@ spec:
       enabled: 'false'
   deployment:
     spec:
+      # RWO PVC + SQLite: never run two Grafana pods at once (rolling update corrupts grafana.db)
+      strategy:
+        type: Recreate
       template:
         spec:
           volumes:

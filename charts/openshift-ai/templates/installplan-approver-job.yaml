@@ -50,9 +50,10 @@ metadata:
   namespace: {{ $namespace }}
   annotations:
     argocd.argoproj.io/hook: Sync
-    argocd.argoproj.io/hook-delete-policy: HookSucceeded
+    argocd.argoproj.io/hook-delete-policy: HookSucceeded,BeforeHookCreation
 spec:
   backoffLimit: 10
+  activeDeadlineSeconds: 900
   template:
     spec:
       serviceAccountName: installplan-approver
