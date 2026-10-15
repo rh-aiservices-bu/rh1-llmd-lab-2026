@@ -1,4 +1,12 @@
+# RHOAI operator. The catalog item overrides these per stage
+# (e.g. dev: channel stable-3.5, startingCSV rhods-operator.3.5.1).
 channel: fast-3.x
+startingCSV: rhods-operator.3.2.0
+
+# Red Hat build of Leader Worker Set operator, required by RHOAI 3.3+ for LLMInferenceService.
+leaderWorkerSet:
+  enabled: false
+  channel: stable-v1.0
 
 llmD:
   namespace:

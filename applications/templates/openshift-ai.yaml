@@ -1,0 +1,33 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: openshift-ai
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  destination:
+    name: in-cluster
+    namespace: redhat-ods-operator
+  project: default
+  source:
+    helm:
+      values: |
+{{ toYaml .Values.openshiftAi | indent 8 }}
+    path: charts/openshift-ai
+    repoURL: https://github.com/rh-aiservices-bu/rh1-llmd-lab-2026
+    targetRevision: {{ .Values.repoRevision }}
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    retry:
+      limit: 10
+      backoff:
+        duration: 1m
+        factor: 2
+        maxDuration: 10m
+    syncOptions:
+      - CreateNamespace=true
+    managedNamespaceMetadata:
+      labels:
+        argocd.argoproj.io/managed-by: openshift-gitops

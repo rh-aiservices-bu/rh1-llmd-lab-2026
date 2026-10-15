@@ -1,28 +1,22 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: openshift-ai
+  name: image-puller
   finalizers:
     - resources-finalizer.argocd.argoproj.io
 spec:
   destination:
     name: in-cluster
-    namespace: redhat-ods-operator
+    namespace: image-puller
   project: default
   source:
-    path: charts/openshift-ai
+    path: charts/image-puller
     repoURL: https://github.com/rh-aiservices-bu/rh1-llmd-lab-2026
-    targetRevision: HEAD
+    targetRevision: {{ .Values.repoRevision }}
   syncPolicy:
     automated:
       prune: true
       selfHeal: true
-    retry:
-      limit: 10
-      backoff:
-        duration: 1m
-        factor: 2
-        maxDuration: 10m
     syncOptions:
       - CreateNamespace=true
     managedNamespaceMetadata:

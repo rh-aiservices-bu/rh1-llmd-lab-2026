@@ -12,7 +12,7 @@ spec:
   source:
     path: charts/grafana
     repoURL: https://github.com/rh-aiservices-bu/rh1-llmd-lab-2026
-    targetRevision: HEAD
+    targetRevision: {{ .Values.repoRevision }}
   syncPolicy:
     automated:
       prune: true
