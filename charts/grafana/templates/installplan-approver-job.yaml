@@ -71,10 +71,25 @@ spec:
               MAX_RETRIES=60
               RETRY_INTERVAL=10
 
-              echo "Waiting for InstallPlan for subscription ${SUBSCRIPTION_NAME}..."
+              # This hook re-runs on every Argo sync (including retries), so it must
+              # only approve the initial install and never a later upgrade InstallPlan.
+              STARTING_CSV=$(oc get subscription ${SUBSCRIPTION_NAME} -n ${NAMESPACE} -o jsonpath='{.spec.startingCSV}' 2>/dev/null || true)
+
+              echo "Waiting for InstallPlan for subscription ${SUBSCRIPTION_NAME} ${STARTING_CSV}..."
 
               for i in $(seq 1 $MAX_RETRIES); do
-                INSTALL_PLAN=$(oc get subscription ${SUBSCRIPTION_NAME} -n ${NAMESPACE} -o jsonpath='{.status.installplan.name}' 2>/dev/null || true)
+                INSTALLED_CSV=$(oc get subscription ${SUBSCRIPTION_NAME} -n ${NAMESPACE} -o jsonpath='{.status.installedCSV}' 2>/dev/null || true)
+                if [ -n "$INSTALLED_CSV" ]; then
+                  echo "${INSTALLED_CSV} is already installed; not approving any further InstallPlans."
+                  exit 0
+                fi
+
+                if [ -n "$STARTING_CSV" ]; then
+                  INSTALL_PLAN=$(oc get installplan -n ${NAMESPACE} -o jsonpath='{range .items[*]}{.metadata.name}{" "}{.spec.clusterServiceVersionNames[*]}{"\n"}{end}' 2>/dev/null \
+                    | awk -v csv="${STARTING_CSV}" '{ for (j = 2; j <= NF; j++) if ($j == csv) { print $1; exit } }')
+                else
+                  INSTALL_PLAN=$(oc get subscription ${SUBSCRIPTION_NAME} -n ${NAMESPACE} -o jsonpath='{.status.installplan.name}' 2>/dev/null || true)
+                fi
 
                 if [ -n "$INSTALL_PLAN" ]; then
                   echo "Found InstallPlan: ${INSTALL_PLAN}"

@@ -1,0 +1,6 @@
+# Git revision the child applications deploy. The catalog item sets this to the
+# same revision as the bootstrap app so a pinned stage pins the charts too.
+repoRevision: HEAD
+
+# Passed through to charts/openshift-ai (see its values.yaml for defaults).
+openshiftAi: {}
