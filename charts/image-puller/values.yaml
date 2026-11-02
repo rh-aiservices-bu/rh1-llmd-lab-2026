@@ -7,5 +7,9 @@ images:
     image: ghcr.io/vllm-project/guidellm:v0.6.0
   - name: multiturn-benchmark
     image: quay.io/hayesphilip/multi-turn-benchmark:0.0.1
-  - name: rhaiis-llmd
-    image: registry.redhat.io/rhaiis/vllm-cuda-rhel9@sha256:ad756c01ec99a99cc7d93401c41b8d92ca96fb1ab7c5262919d818f2be4f3768
+  # llm-d images for RHOAI 3.5.1 (rhods-operator.3.5.1 relatedImages).
+  # Update these when the catalog item moves to a different RHOAI version.
+  - name: rhaii-llmd
+    image: registry.redhat.io/rhaii/vllm-cuda-rhel9@sha256:c056e61672b6aea489ad5dde0bd2f8497230f5333e87f7cf6c494eba3bfdc808
+  - name: llmd-endpoint-picker
+    image: registry.redhat.io/rhoai/odh-llm-d-router-endpoint-picker-rhel9@sha256:14e57b536479e7d8b7d495000d8402ca780997994096277d131b56e6a9bcf27f
