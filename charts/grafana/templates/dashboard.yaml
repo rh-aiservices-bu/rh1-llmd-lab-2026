@@ -257,7 +257,7 @@ spec:
                 "type": "prometheus",
                 "uid": "${DS_PROMETHEUS}"
               },
-              "expr": "histogram_quantile(0.50, rate(vllm:time_per_output_token_seconds_bucket{model_name=~\"$model\", namespace=~\"$namespace\"}[5m]))",
+              "expr": "histogram_quantile(0.50, rate(vllm:inter_token_latency_seconds_bucket{model_name=~\"$model\", namespace=~\"$namespace\"}[5m]) or rate(vllm:time_per_output_token_seconds_bucket{model_name=~\"$model\", namespace=~\"$namespace\"}[5m]))",
               "interval": "",
               "legendFormat": "P50 Inter-Token",
               "refId": "A"
@@ -267,7 +267,7 @@ spec:
                 "type": "prometheus",
                 "uid": "${DS_PROMETHEUS}"
               },
-              "expr": "histogram_quantile(0.95, rate(vllm:time_per_output_token_seconds_bucket{model_name=~\"$model\", namespace=~\"$namespace\"}[5m]))",
+              "expr": "histogram_quantile(0.95, rate(vllm:inter_token_latency_seconds_bucket{model_name=~\"$model\", namespace=~\"$namespace\"}[5m]) or rate(vllm:time_per_output_token_seconds_bucket{model_name=~\"$model\", namespace=~\"$namespace\"}[5m]))",
               "interval": "",
               "legendFormat": "P95 Inter-Token",
               "refId": "B"
